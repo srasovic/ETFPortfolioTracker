@@ -1,6 +1,6 @@
 # app.py
 # Streamlit dashboard: Portfolio Y Signal Tracker
-# Author: ChatGPT (for Meri)
+# Author: S
 # Date: 2025-10-21
 #
 # What this app does
