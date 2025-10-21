@@ -286,3 +286,50 @@ if show_notes:
 st.markdown("---")
 st.caption("This dashboard uses a conservative, mean-reverting base model with signal-driven tilts. "
            "Ranges are cumulative returns for each horizon, not annualised.")
+
+# -----------------------------
+# Signal Explanation Section
+# -----------------------------
+with st.expander("📘 Explanation: How signals drive the model"):
+    st.markdown("""
+    **This model dynamically adjusts each ETF's expected return ranges based on real-time market signals.**
+    
+    - **🟦 VIX (Volatility Index):**  
+      Measures expected market volatility.  
+      - Rising VIX → increases option income (helps SPYI) but pressures growth ETFs (EQQQ, SMH).  
+      - Falling VIX → signals calmer markets, lowering SPYI yield but stabilizing tech valuations.
+
+    - **🟧 US 10-Year Treasury Yield (^TNX):**  
+      Represents long-term interest rates and real yield environment.  
+      - Rising yields → reduce equity valuation multiples and weigh on GOLD.  
+      - Falling yields → supportive for equities and gold; bullish for SPYI, EQQQ.
+
+    - **🟩 DXY (US Dollar Index):**  
+      Measures USD strength vs major currencies.  
+      - Stronger USD → dampens commodity prices (hurts GOLD), limits overseas earnings.  
+      - Weaker USD → tailwind for GOLD and international revenues (helps SMH, SPYI).
+
+    - **🟪 Nasdaq-100 (^NDX):**  
+      Proxy for large-cap tech earnings momentum.  
+      - Higher NDX levels → positive tilt for EQQQ and SPYI; also influences SMH via tech cycle strength.
+
+    - **🔷 SOX (Semiconductor Index):**  
+      Tracks semiconductor sector momentum.  
+      - Strong SOX → bullish for SMH; indicates demand for chips and AI infrastructure.
+
+    - **🟨 Gold Futures (GC=F):**  
+      Used as a macro stress and inflation proxy.  
+      - Rising gold → signals higher risk aversion or inflation fears.  
+      - Moderate gold → indicates balanced macro sentiment.
+
+    ---
+    **How the app uses these:**
+    - Each signal is compared against its **12-month median level**.  
+    - Deviations are normalized and weighted by **ETF-specific sensitivities**.  
+    - A composite score (tilt) between **−1 and +1** is calculated.  
+    - That tilt expands or contracts the base return ranges for each horizon.  
+    - All ranges shown are **cumulative expected returns** (not annualised).
+
+    The result is a **live, signal-responsive forecast** showing how changing market conditions
+    shift expected performance across short, mid, long, and decade horizons.
+    """)
